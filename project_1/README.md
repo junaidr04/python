@@ -86,4 +86,4 @@ This is an educational project built with only 16 sample records. For a producti
 
 ## Author
 
-Junaidur Rahman
+Junaid Bin Jahangir
