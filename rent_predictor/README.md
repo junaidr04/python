@@ -95,6 +95,32 @@ http://127.0.0.1:3000
 
 If port 3000 is already in use, Vite automatically selects another available port such as 3001 or 3002. Open the URL shown beside `Local:`.
 
+## Render Deployment
+
+Create the backend web service first:
+
+```text
+Root Directory: rent_predictor/backend
+Build Command: pip install -r requirements.txt
+Start Command: uvicorn app:app --host 0.0.0.0 --port $PORT
+```
+
+For the frontend static site, use:
+
+```text
+Root Directory: rent_predictor/frontend
+Build Command: npm install && npm run build
+Publish Directory: dist
+```
+
+Set this frontend environment variable to the deployed backend URL:
+
+```text
+VITE_API_URL=https://your-backend-service.onrender.com
+```
+
+The backend accepts local development origins and Render frontend origins. For a custom frontend domain, add its exact origin to the backend `CORS_ORIGINS` environment variable, separated by commas.
+
 ## API Reference
 
 ### Health Check

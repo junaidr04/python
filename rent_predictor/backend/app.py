@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from pathlib import Path
+import os
 
 # Tomar ager code tai, sudhu API banabo
 data_candidates = [
@@ -21,9 +22,15 @@ model = LinearRegression()
 model.fit(X, y)
 
 app = FastAPI()
+configured_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "").split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_origins=configured_origins,
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$|https://[a-zA-Z0-9-]+\.onrender\.com$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

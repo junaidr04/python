@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './app.css';
 
+const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001';
+
 function App() {
     const [rooms, setRooms] = useState(2);
     const [size, setSize] = useState(700);
@@ -22,7 +24,7 @@ function App() {
 
         setLoading(true);
         try {
-            const res = await fetch('http://127.0.0.1:8001/predict', {
+            const res = await fetch(`${apiBaseUrl}/predict`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ rooms: roomCount, size_sqft: area })
