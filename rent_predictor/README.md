@@ -1,0 +1,215 @@
+# Jack's Property Lab
+
+A full-stack house rent prediction application built with FastAPI, React, and scikit-learn. Enter the number of rooms and floor area to receive an estimated monthly rent in Bangladeshi taka.
+
+## Features
+
+- Linear regression rent prediction model
+- FastAPI backend with a JSON API
+- React and Vite frontend
+- Responsive property estimation interface
+- Input validation and loading states
+- API error handling
+- Automatic dataset path resolution
+- Local development CORS support
+
+## Tech Stack
+
+### Backend
+
+- Python 3.14+
+- FastAPI
+- Uvicorn
+- pandas
+- scikit-learn
+- Pydantic
+
+### Frontend
+
+- React 18
+- Vite
+- JavaScript
+- CSS
+
+## Project Structure
+
+```text
+rent_predictor/
+|-- backend/
+|   |-- app.py                    # FastAPI application and ML model
+|   |-- house_rent_project1.csv   # Optional local training dataset
+|-- frontend/
+|   |-- index.html                # Vite entry document
+|   |-- package.json              # Frontend scripts and dependencies
+|   |-- package-lock.json
+|   |-- vite.config.js
+|   |-- src/
+|       |-- app.jsx               # Main React interface
+|       |-- app.css               # Application styles
+|       |-- index.jsx             # React entry point
+|-- README.md
+```
+
+## Prerequisites
+
+Install the following before starting:
+
+- Python 3.10 or newer
+- Node.js 18 or newer
+- npm
+
+## Backend Setup
+
+From the `rent_predictor/backend` directory, install the Python packages:
+
+```powershell
+pip install fastapi uvicorn pandas scikit-learn
+```
+
+Start the API:
+
+```powershell
+python -m uvicorn app:app --reload --port 8001
+```
+
+The backend will be available at:
+
+- API: http://127.0.0.1:8001
+- Interactive API docs: http://127.0.0.1:8001/docs
+
+## Frontend Setup
+
+Open a second terminal and move to the frontend directory:
+
+```powershell
+cd C:\Users\<your-username>\path\to\python\rent_predictor\frontend
+npm install
+npm run dev
+```
+
+Vite will print the frontend URL in the terminal. The default URL is:
+
+```text
+http://127.0.0.1:3000
+```
+
+If port 3000 is already in use, Vite automatically selects another available port such as 3001 or 3002. Open the URL shown beside `Local:`.
+
+## API Reference
+
+### Health Check
+
+```http
+GET /
+```
+
+Example response:
+
+```json
+{
+  "message": "Jack er AI API is running!"
+}
+```
+
+### Predict Rent
+
+```http
+POST /predict
+Content-Type: application/json
+```
+
+Request body:
+
+```json
+{
+  "rooms": 2,
+  "size_sqft": 700
+}
+```
+
+Example response:
+
+```json
+{
+  "predicted_rent": 13958
+}
+```
+
+You can also test this endpoint from the Swagger interface at `/docs`.
+
+## Dataset
+
+The model expects a CSV file with these columns:
+
+| Column | Description |
+| --- | --- |
+| `rooms` | Number of rooms |
+| `size_sqft` | Property size in square feet |
+| `rent` | Monthly rent in taka |
+
+The backend checks for a non-empty dataset in the backend directory first. If one is not available, it falls back to `project_1/house_rent_project1.csv` from the repository root.
+
+## How the Prediction Works
+
+1. The backend loads the rental dataset with pandas.
+2. `rooms` and `size_sqft` are used as model features.
+3. `rent` is used as the target value.
+4. A `LinearRegression` model is trained when the API starts.
+5. The `/predict` endpoint returns the estimated rent for the submitted property details.
+
+## Troubleshooting
+
+### `uvicorn` is not recognized
+
+Use Python's module runner instead of the executable directly:
+
+```powershell
+python -m uvicorn app:app --reload --port 8001
+```
+
+### `ModuleNotFoundError: No module named 'rent_predictor'`
+
+If your terminal is already inside `rent_predictor/backend`, use:
+
+```powershell
+python -m uvicorn app:app --reload --port 8001
+```
+
+Use `rent_predictor.backend.app:app` only when running from the repository root.
+
+### Port already in use
+
+Start the backend on another port and update the frontend API URL if needed:
+
+```powershell
+python -m uvicorn app:app --reload --port 8002
+```
+
+### Frontend cannot reach the backend
+
+Make sure both servers are running and that the frontend request URL matches the backend port. The current frontend uses:
+
+```text
+http://127.0.0.1:8001/predict
+```
+
+## Limitations
+
+This project uses a small educational dataset and only two features. Predictions should be treated as estimates, not formal property valuations. A production model should use more records and additional features such as location, bathrooms, furnishing, floor level, and neighborhood quality.
+
+## Future Improvements
+
+- Add a larger, more representative dataset
+- Add automated model evaluation metrics
+- Persist a trained model instead of training on every startup
+- Add location and property condition features
+- Add automated backend and frontend tests
+- Add deployment configuration
+
+## License
+
+This project is intended for educational and demonstration purposes.
+
+## Author
+
+Junaid Bin Jahangir
