@@ -1,29 +1,86 @@
 import { useState } from 'react';
+import './app.css';
 
 function App() {
     const [rooms, setRooms] = useState(2);
     const [size, setSize] = useState(700);
     const [rent, setRent] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const predictRent = async () => {
-        const res = await fetch('http://127.0.0.1:8001/predict', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ rooms: parseInt(rooms), size_sqft: parseInt(size) })
-        });
-        const data = await res.json();
-        setRent(data.predicted_rent);
+    const predictRent = async (event) => {
+        event.preventDefault();
+        setError('');
+        setRent(null);
+
+        const roomCount = Number(rooms);
+        const area = Number(size);
+        if (!roomCount || roomCount < 1 || !area || area < 100) {
+            setError('Enter at least 1 room and 100 sq ft.');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const res = await fetch('http://127.0.0.1:8001/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rooms: roomCount, size_sqft: area })
+            });
+            if (!res.ok) throw new Error('Prediction request failed');
+            const data = await res.json();
+            setRent(data.predicted_rent);
+        } catch {
+            setError('Could not reach the prediction service. Make sure the backend is running.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '80px', fontFamily: 'Arial' }}>
-            <h1>Jack's Rent Predictor</h1>
-            <input type="number" value={rooms} onChange={e => setRooms(e.target.value)} placeholder="Rooms" />
-            <input type="number" value={size} onChange={e => setSize(e.target.value)} placeholder="Size sqft" />
-            <br /><br />
-            <button onClick={predictRent}>Predict Rent</button>
-            {rent && <h2>Predicted Rent: {rent} TK</h2>}
-        </div>
+        <main className="app-shell">
+            <nav className="topbar">
+                <div className="brand-mark">JP</div>
+                <span className="brand-name">Jack's Property Lab</span>
+                <span className="status-pill"><span className="status-dot" /> Model online</span>
+            </nav>
+
+            <section className="hero-grid">
+                <div className="hero-copy">
+                    <p className="eyebrow">SMART RENT ESTIMATOR</p>
+                    <h1>Find the right rent for your next address.</h1>
+                    <p className="hero-text">Get a quick, data-backed estimate using the property's room count and floor area.</p>
+                    <div className="trust-row">
+                        <div className="trust-icon">01</div>
+                        <div><strong>Simple inputs</strong><span>Two details. One clear estimate.</span></div>
+                    </div>
+                </div>
+
+                <form className="prediction-card" onSubmit={predictRent}>
+                    <div className="card-heading">
+                        <div><p className="card-kicker">PROPERTY DETAILS</p><h2>Tell us about the home</h2></div>
+                        <span className="card-step">1 / 1</span>
+                    </div>
+
+                    <label htmlFor="rooms">Number of rooms</label>
+                    <div className="input-wrap"><input id="rooms" type="number" min="1" value={rooms} onChange={e => setRooms(e.target.value)} /><span>rooms</span></div>
+
+                    <label htmlFor="size">Floor area</label>
+                    <div className="input-wrap"><input id="size" type="number" min="100" value={size} onChange={e => setSize(e.target.value)} /><span>sq ft</span></div>
+
+                    <button className="predict-button" type="submit" disabled={loading}>{loading ? 'Calculating...' : 'Estimate monthly rent'} <span aria-hidden="true">-&gt;</span></button>
+                    {error && <p className="error-message" role="alert">{error}</p>}
+
+                    <div className={`result-panel ${rent ? 'has-result' : ''}`} aria-live="polite">
+                        <span className="result-label">ESTIMATED MONTHLY RENT</span>
+                        <strong>{rent ? `${rent.toLocaleString()} TK` : '---'}</strong>
+                        <span className="result-note">Based on current property data</span>
+                    </div>
+                </form>
+            </section>
+
+            <footer><span>JACK'S PROPERTY LAB</span><span>Designed for faster decisions</span></footer>
+          </main>
     );
 }
 
