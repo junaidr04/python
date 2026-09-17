@@ -181,6 +181,13 @@ The model expects a CSV file with these columns:
 | `size_sqft` | Property size in square feet |
 | `rent` | Monthly rent in taka |
 
+The prediction form accepts values within the training data range only:
+
+- Rooms: `1` to `4`
+- Floor area: `100` to `1,200` sq ft
+
+Values above the dataset's maximum range are rejected to prevent unsupported extrapolation.
+
 The backend checks for a non-empty dataset in the backend directory first. If one is not available, it falls back to `project_1/house_rent_project1.csv` from the repository root.
 
 ## How the Prediction Works

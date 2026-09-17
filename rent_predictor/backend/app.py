@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from pathlib import Path
@@ -37,8 +37,8 @@ app.add_middleware(
 )
 
 class House(BaseModel):
-    rooms: int
-    size_sqft: int
+    rooms: int = Field(ge=1, le=4)
+    size_sqft: int = Field(ge=100, le=1200)
 
 @app.get("/")
 def home():

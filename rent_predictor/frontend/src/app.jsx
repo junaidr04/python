@@ -17,8 +17,8 @@ function App() {
 
         const roomCount = Number(rooms);
         const area = Number(size);
-        if (!roomCount || roomCount < 1 || !area || area < 100) {
-            setError('Enter at least 1 room and 100 sq ft.');
+        if (!roomCount || roomCount < 1 || roomCount > 4 || !area || area < 100 || area > 1200) {
+            setError('Enter 1-4 rooms and an area between 100 and 1,200 sq ft.');
             return;
         }
 
@@ -65,10 +65,10 @@ function App() {
                     </div>
 
                     <label htmlFor="rooms">Number of rooms</label>
-                    <div className="input-wrap"><input id="rooms" type="number" min="1" value={rooms} onChange={e => setRooms(e.target.value)} /><span>rooms</span></div>
+                    <div className="input-wrap"><input id="rooms" type="number" min="1" max="4" value={rooms} onChange={e => setRooms(e.target.value)} /><span>1-4 rooms</span></div>
 
                     <label htmlFor="size">Floor area</label>
-                    <div className="input-wrap"><input id="size" type="number" min="100" value={size} onChange={e => setSize(e.target.value)} /><span>sq ft</span></div>
+                    <div className="input-wrap"><input id="size" type="number" min="100" max="1200" value={size} onChange={e => setSize(e.target.value)} /><span>100-1,200 sq ft</span></div>
 
                     <button className="predict-button" type="submit" disabled={loading}>{loading ? 'Calculating...' : 'Estimate monthly rent'} <span aria-hidden="true">-&gt;</span></button>
                     {error && <p className="error-message" role="alert">{error}</p>}
