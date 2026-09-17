@@ -1,0 +1,17 @@
+{
+  "name": "rent-predictor-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vite --host 127.0.0.1 --port 3000",
+    "dev": "vite --host 127.0.0.1 --port 3000"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest"
+  }
+}

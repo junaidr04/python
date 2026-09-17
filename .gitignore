@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+# Frontend dependencies and build output
+rent_predictor/frontend/node_modules/
+rent_predictor/frontend/dist/
+
+# Local environment files
+.env
+.venv/
+venv/
