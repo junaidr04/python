@@ -2,6 +2,12 @@
 
 A full-stack house rent prediction application built with FastAPI, React, and scikit-learn. Enter the number of rooms and floor area to receive an estimated monthly rent in Bangladeshi taka.
 
+## Live Demo
+
+Try the deployed application:
+
+**[Open Jack's Property Lab](https://jack-rent-predictor.vercel.app)**
+
 ## Features
 
 - Linear regression rent prediction model
@@ -112,6 +118,8 @@ Root Directory: rent_predictor/frontend
 Build Command: npm install && npm run build
 Publish Directory: dist
 ```
+
+The production frontend is deployed at [jack-rent-predictor.vercel.app](https://jack-rent-predictor.vercel.app).
 
 Set this frontend environment variable to the deployed backend URL:
 
