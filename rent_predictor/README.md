@@ -1,6 +1,6 @@
 # Jack's Property Lab
 
-A full-stack house rent prediction application built with FastAPI, React, and scikit-learn. Enter the number of rooms and floor area to receive an estimated monthly rent in Bangladeshi taka.
+A full-stack house rent prediction application built with FastAPI, React, and scikit-learn. Enter the number of rooms, floor area, and location to receive an estimated monthly rent in Bangladeshi taka.
 
 ## Live Demo
 
@@ -10,7 +10,7 @@ Try the deployed application:
 
 ## Features
 
-- Linear regression rent prediction model
+- Location-aware Random Forest rent prediction model
 - FastAPI backend with a JSON API
 - React and Vite frontend
 - Responsive property estimation interface
@@ -196,8 +196,9 @@ The model expects a CSV file with these columns:
 
 The prediction form accepts values within the training data range only:
 
-- Rooms: `1` to `4`
-- Floor area: `100` to `1,200` sq ft
+- Rooms: `1` to `3`
+- Floor area: `100` to `1,300` sq ft
+- Location: `GEC`, `Agrabad`, `Oxygen`, `Bayezid`, or `2No Gate`
 
 Values above the dataset's maximum range are rejected to prevent unsupported extrapolation.
 
@@ -249,7 +250,7 @@ http://127.0.0.1:8001/predict
 
 ## Limitations
 
-This project uses a small educational dataset and only two features. Predictions should be treated as estimates, not formal property valuations. A production model should use more records and additional features such as location, bathrooms, furnishing, floor level, and neighborhood quality.
+This project uses a small educational dataset and three features. Predictions should be treated as estimates, not formal property valuations. A production model should use more records and additional features such as bathrooms, furnishing, floor level, and neighborhood quality.
 
 ## Future Improvements
 

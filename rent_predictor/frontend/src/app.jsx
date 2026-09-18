@@ -6,6 +6,7 @@ const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001';
 function App() {
     const [rooms, setRooms] = useState(2);
     const [size, setSize] = useState(700);
+    const [location, setLocation] = useState('GEC');
     const [rent, setRent] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -17,8 +18,8 @@ function App() {
 
         const roomCount = Number(rooms);
         const area = Number(size);
-        if (!roomCount || roomCount < 1 || roomCount > 4 || !area || area < 100 || area > 1200) {
-            setError('Enter 1-4 rooms and an area between 100 and 1,200 sq ft.');
+        if (!roomCount || roomCount < 1 || roomCount > 3 || !area || area < 100 || area > 1300) {
+            setError('Enter 1-3 rooms and an area between 100 and 1,300 sq ft.');
             return;
         }
 
@@ -27,7 +28,7 @@ function App() {
             const res = await fetch(`${apiBaseUrl}/predict`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rooms: roomCount, size_sqft: area })
+                body: JSON.stringify({ rooms: roomCount, size_sqft: area, location })
             });
             if (!res.ok) throw new Error('Prediction request failed');
             const data = await res.json();
@@ -51,10 +52,10 @@ function App() {
                 <div className="hero-copy">
                     <p className="eyebrow">SMART RENT ESTIMATOR</p>
                     <h1>Find the right rent for your next address.</h1>
-                    <p className="hero-text">Get a quick, data-backed estimate using the property's room count and floor area.</p>
+                    <p className="hero-text">Get a quick, location-aware estimate using the property's rooms, floor area, and neighborhood.</p>
                     <div className="trust-row">
                         <div className="trust-icon">01</div>
-                        <div><strong>Simple inputs</strong><span>Two details. One clear estimate.</span></div>
+                        <div><strong>Simple inputs</strong><span>Three details. One clear estimate.</span></div>
                     </div>
                 </div>
 
@@ -65,10 +66,13 @@ function App() {
                     </div>
 
                     <label htmlFor="rooms">Number of rooms</label>
-                    <div className="input-wrap"><input id="rooms" type="number" min="1" max="4" value={rooms} onChange={e => setRooms(e.target.value)} /><span>1-4 rooms</span></div>
+                    <div className="input-wrap"><input id="rooms" type="number" min="1" max="3" value={rooms} onChange={e => setRooms(e.target.value)} /><span>1-3 rooms</span></div>
 
                     <label htmlFor="size">Floor area</label>
-                    <div className="input-wrap"><input id="size" type="number" min="100" max="1200" value={size} onChange={e => setSize(e.target.value)} /><span>100-1,200 sq ft</span></div>
+                    <div className="input-wrap"><input id="size" type="number" min="100" max="1300" value={size} onChange={e => setSize(e.target.value)} /><span>100-1,300 sq ft</span></div>
+
+                    <label htmlFor="location">Location</label>
+                    <div className="input-wrap"><select id="location" value={location} onChange={e => setLocation(e.target.value)}><option>GEC</option><option>Agrabad</option><option>Oxygen</option><option>Bayezid</option><option>2No Gate</option></select><span>area</span></div>
 
                     <button className="predict-button" type="submit" disabled={loading}>{loading ? 'Calculating...' : 'Estimate monthly rent'} <span aria-hidden="true">-&gt;</span></button>
                     {error && <p className="error-message" role="alert">{error}</p>}

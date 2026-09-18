@@ -5,6 +5,13 @@ import pandas as pd
 import pickle
 from pathlib import Path
 import os
+from fastapi import HTTPException
+
+data_path = Path(__file__).with_name("house_rent_project1.csv")
+dataset = pd.read_csv(data_path)
+valid_locations = set(dataset["location"].unique())
+max_rooms = int(dataset["rooms"].max())
+max_size_sqft = int(dataset["size_sqft"].max())
 
 # Load the pre-trained model at startup. Training is handled once by train.py.
 model_path = Path(__file__).with_name("rent_model.pkl")
@@ -31,8 +38,9 @@ app.add_middleware(
 )
 
 class House(BaseModel):
-    rooms: int = Field(ge=1, le=4)
-    size_sqft: int = Field(ge=100, le=1200)
+    rooms: int = Field(ge=1)
+    size_sqft: int = Field(ge=100)
+    location: str
 
 @app.get("/")
 def home():
@@ -40,7 +48,19 @@ def home():
 
 @app.post("/predict")
 def predict(data: House):
-    # Convert the validated request into the same feature columns used in training.
-    input_df = pd.DataFrame([[data.rooms, data.size_sqft]], columns=['rooms', 'size_sqft'])
+    # Keep predictions inside the range represented by the training dataset.
+    if data.rooms > max_rooms or data.size_sqft > max_size_sqft:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Supported range: up to {max_rooms} rooms and {max_size_sqft} sq ft.",
+        )
+    if data.location not in valid_locations:
+        raise HTTPException(status_code=422, detail="Location is not in the training dataset.")
+
+    # Use the same feature names expected by the saved preprocessing pipeline.
+    input_df = pd.DataFrame(
+        [[data.rooms, data.size_sqft, data.location]],
+        columns=["rooms", "size_sqft", "location"],
+    )
     rent = model.predict(input_df)[0]
     return {"predicted_rent": round(rent)}
