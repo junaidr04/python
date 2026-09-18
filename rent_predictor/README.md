@@ -245,7 +245,7 @@ python -m uvicorn app:app --reload --port 8002
 Make sure both servers are running and that the frontend request URL matches the backend port. The current frontend uses:
 
 ```text
-http://127.0.0.1:8001/predict
+http://127.0.0.1:8002/predict
 ```
 
 ## Limitations

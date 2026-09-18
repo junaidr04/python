@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './app.css';
 
-const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001';
+const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8002';
 
 function App() {
     const [rooms, setRooms] = useState(2);
