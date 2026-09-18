@@ -2,24 +2,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+import pickle
 from pathlib import Path
 import os
 
-# Tomar ager code tai, sudhu API banabo
-data_candidates = [
-    Path(__file__).with_name("house_rent_project1.csv"),
-    Path(__file__).parent.parent / "house_rent_project1.csv",
-    Path(__file__).parents[2] / "project_1" / "house_rent_project1.csv",
-]
-data_path = next((path for path in data_candidates if path.is_file() and path.stat().st_size > 0), None)
-if data_path is None:
-    raise FileNotFoundError("Could not find a non-empty house_rent_project1.csv dataset.")
-df = pd.read_csv(data_path)
-X = df[['rooms', 'size_sqft']]
-y = df['rent']
-model = LinearRegression()
-model.fit(X, y)
+# Load the pre-trained model at startup. Training is handled once by train.py.
+model_path = Path(__file__).with_name("rent_model.pkl")
+if not model_path.is_file():
+    raise FileNotFoundError(
+        "rent_model.pkl not found. Run 'python train.py' from the backend folder first."
+    )
+with model_path.open("rb") as model_file:
+    model = pickle.load(model_file)
 
 app = FastAPI()
 configured_origins = [
@@ -46,6 +40,7 @@ def home():
 
 @app.post("/predict")
 def predict(data: House):
+    # Convert the validated request into the same feature columns used in training.
     input_df = pd.DataFrame([[data.rooms, data.size_sqft]], columns=['rooms', 'size_sqft'])
     rent = model.predict(input_df)[0]
     return {"predicted_rent": round(rent)}

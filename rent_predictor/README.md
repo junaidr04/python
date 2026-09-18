@@ -43,7 +43,9 @@ Try the deployed application:
 rent_predictor/
 |-- backend/
 |   |-- app.py                    # FastAPI application and ML model
+|   |-- train.py                  # One-time model training script
 |   |-- house_rent_project1.csv   # Optional local training dataset
+|   |-- rent_model.pkl            # Serialized trained model
 |-- frontend/
 |   |-- index.html                # Vite entry document
 |   |-- package.json              # Frontend scripts and dependencies
@@ -71,6 +73,17 @@ From the `rent_predictor/backend` directory, install the Python packages:
 ```powershell
 pip install fastapi uvicorn pandas scikit-learn
 ```
+
+### Train the Model Once
+
+The model is trained separately and saved as `rent_model.pkl`. The API loads this file at startup, so it does not retrain on every request or restart.
+
+```powershell
+cd C:\Users\<your-username>\path\to\python\rent_predictor\backend
+python train.py
+```
+
+Run `python train.py` again whenever the CSV dataset changes. This replaces the saved model with a newly trained version.
 
 Start the API:
 
@@ -188,7 +201,7 @@ The prediction form accepts values within the training data range only:
 
 Values above the dataset's maximum range are rejected to prevent unsupported extrapolation.
 
-The backend checks for a non-empty dataset in the backend directory first. If one is not available, it falls back to `project_1/house_rent_project1.csv` from the repository root.
+The dataset is used by `train.py`. The running API uses the generated `rent_model.pkl` and does not load or train from the CSV at startup.
 
 ## How the Prediction Works
 
