@@ -1,22 +1,570 @@
+/* Google Fonts থেকে app-এর মূল দুইটি font আনা হচ্ছে। */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
-:root { font-family: 'DM Sans', sans-serif; color: #252a28; background: #f4f1e8; font-synthesis: none; }
-* { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; }
-button, select { font: inherit; }
-.app-shell { min-height: 100vh; padding: 24px 6vw 20px; background: radial-gradient(circle at 86% 2%, rgba(224, 142, 65, .15), transparent 27%), linear-gradient(125deg, #f5f2e9 0%, #eef2e5 52%, #e8ede0 100%); }
-.topbar, .hero-layout, .bottom-strip, footer { max-width: 1160px; margin: 0 auto; }
-.topbar { display: flex; align-items: center; justify-content: space-between; min-height: 48px; }
-.brand { display: flex; align-items: center; gap: 10px; color: #27312d; text-decoration: none; }
-.brand-icon { display: grid; place-items: center; width: 38px; height: 38px; color: #fff9eb; background: #db7544; border-radius: 11px; box-shadow: 0 6px 15px rgba(191, 92, 47, .2); }
-.brand strong, .brand small { display: block; }.brand strong { font: 700 15px 'Space Grotesk'; letter-spacing: -.2px; }.brand small { margin-top: 2px; color: #7b847e; font-size: 10px; }
-.nav-meta { display: flex; align-items: center; gap: 8px; color: #68736b; font-size: 12px; font-weight: 600; }.live-dot { width: 7px; height: 7px; background: #5e9b66; border-radius: 50%; box-shadow: 0 0 0 4px rgba(94, 155, 102, .13); }
-.hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: clamp(45px, 9vw, 138px); align-items: center; padding: 9vh 0 7vh; }.eyebrow { display: flex; align-items: center; gap: 8px; margin: 0; color: #b36338; font-size: 10px; font-weight: 700; letter-spacing: 1.7px; }.hero-copy h1 { max-width: 610px; margin: 20px 0 21px; color: #293b32; font: 600 clamp(43px, 5.7vw, 78px)/.97 'Space Grotesk'; letter-spacing: -3.2px; }.hero-copy h1 em { color: #c9683c; font-style: normal; }.hero-text { max-width: 500px; margin: 0; color: #6a766c; font-size: 16px; line-height: 1.65; }.proof-row { display: flex; gap: 34px; margin-top: 44px; }.proof-item { display: flex; align-items: center; gap: 10px; color: #c0673e; }.proof-item span { display: block; }.proof-item strong, .proof-item small { display: block; }.proof-item strong { color: #40534a; font-size: 12px; }.proof-item small { margin-top: 3px; color: #89948a; font-size: 11px; }
-.finder-panel { padding: 28px 30px 26px; background: rgba(255, 253, 247, .88); border: 1px solid rgba(255, 255, 255, .9); border-radius: 5px; box-shadow: 0 24px 60px rgba(56, 66, 49, .13); }.panel-topline, .result-heading { display: flex; justify-content: space-between; align-items: center; }.panel-label, .result-heading { color: #9a765e; font-size: 9px; font-weight: 700; letter-spacing: 1.6px; }.panel-count { color: #9da59b; font: 700 11px 'Space Grotesk'; }.panel-count i { color: #d5d8ce; font-style: normal; }.panel-heading { margin: 16px 0 23px; }.panel-heading h2 { margin: 0; color: #293b32; font: 600 25px 'Space Grotesk'; letter-spacing: -.8px; }.panel-heading p { margin: 5px 0 0; color: #8b958c; font-size: 12px; }
-label { display: block; margin: 16px 0 7px; color: #68776c; font-size: 11px; font-weight: 700; }select { width: 100%; padding: 11px 12px; color: #34483d; background: #f5f6ed; border: 1px solid #e2e7dc; border-radius: 3px; outline: none; cursor: pointer; font-size: 13px; font-weight: 600; }select:focus { border-color: #d47a50; box-shadow: 0 0 0 3px rgba(212, 122, 80, .12); }.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.preference-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 0 1px; border-bottom: 1px solid #edf0e8; }.preference-label { display: flex; align-items: center; gap: 7px; color: #68776c; font-size: 11px; font-weight: 600; }.preference-label svg { color: #c96e45; }.segmented { display: flex; gap: 2px; padding: 2px; background: #eef0e7; border-radius: 4px; }.segmented button { min-width: 38px; padding: 5px 7px; color: #8c968d; background: transparent; border: 0; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: 700; }.segmented button.selected { color: #fff9ef; background: #3f6652; }.predict-button { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 24px; padding: 14px 16px; color: #fffaf0; background: #d16e42; border: 0; border-radius: 3px; cursor: pointer; font-size: 12px; font-weight: 700; transition: transform .2s, background .2s; }.predict-button:hover { background: #bb5d35; transform: translateY(-2px); }.predict-button:disabled { cursor: wait; opacity: .65; transform: none; }.error-message { margin: 11px 0 0; color: #ae4936; font-size: 11px; line-height: 1.4; }
-.result-panel { margin-top: 16px; padding: 15px; background: #f0f2e9; border: 1px solid transparent; border-radius: 3px; }.result-panel.has-result { background: #e8f0df; border-color: #d5e2c7; animation: reveal .35s ease-out; }.result-heading { color: #7f8d80; font-size: 8px; }.result-area { color: #c36d47; }.result-panel strong { display: block; margin: 7px 0 3px; color: #304b3c; font: 600 31px 'Space Grotesk'; letter-spacing: -1px; }.result-note { color: #8c988b; font-size: 10px; }
-.bottom-strip { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 23px; padding: 19px 0; border-top: 1px solid rgba(100, 119, 99, .18); border-bottom: 1px solid rgba(100, 119, 99, .18); }.bottom-strip > div { display: flex; gap: 10px; }.strip-number { color: #c8764f; font: 700 11px 'Space Grotesk'; }.bottom-strip strong, .bottom-strip small { display: block; }.bottom-strip strong { color: #506156; font-size: 11px; }.bottom-strip small { max-width: 190px; margin-top: 4px; color: #919b91; font-size: 10px; line-height: 1.35; }.help-icon { align-self: center; color: #a6afa4; }
-footer { display: flex; justify-content: space-between; padding-top: 17px; color: #9aa39a; font-size: 9px; letter-spacing: 1.2px; }@keyframes reveal { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 800px) { .app-shell { padding: 20px; }.hero-layout { grid-template-columns: 1fr; gap: 45px; padding: 10vh 0 8vh; }.hero-copy h1 { max-width: 620px; font-size: clamp(45px, 12vw, 68px); }.hero-text { font-size: 15px; }.bottom-strip { grid-template-columns: 1fr; gap: 16px; }.help-icon { display: none; } }
-@media (max-width: 460px) { .nav-meta { font-size: 10px; }.proof-row { gap: 18px; margin-top: 30px; }.finder-panel { padding: 23px 20px; }.form-row { gap: 9px; }footer { gap: 12px; flex-direction: column; } }
+/* :root পুরো website-এর default color এবং font variables-এর base। */
+:root {
+    /* সাধারণ paragraph এবং UI text-এর font। */
+    font-family: 'DM Sans', sans-serif;
+    /* default text color। */
+    color: #252a28;
+    /* page-এর মূল background color। */
+    background: #f4f1e8;
+    /* browser যেন নিজে থেকে font style বদলে না দেয়। */
+    font-synthesis: none;
+}
+
+/* সব element-এর width-এর মধ্যে padding এবং border ধরা হবে। */
+* {
+    box-sizing: border-box;
+}
+
+/* body-এর default margin সরিয়ে minimum screen width রাখা হচ্ছে। */
+body {
+    margin: 0;
+    min-width: 320px;
+}
+
+/* button/select-এ website-এর inherited font ব্যবহার করানো হচ্ছে। */
+button,
+select {
+    font: inherit;
+}
+
+/* পুরো app-এর minimum height এবং soft layered background। */
+.app-shell {
+    /* screen-এর অন্তত পুরো height জুড়ে layout থাকবে। */
+    min-height: 100vh;
+    /* উপরে/নিচে এবং পাশে responsive spacing। */
+    padding: 24px 6vw 20px;
+    /* একটি radial glow-এর উপর diagonal background layer। */
+    background: radial-gradient(circle at 86% 2%, rgba(224, 142, 65, .15), transparent 27%), linear-gradient(125deg, #f5f2e9 0%, #eef2e5 52%, #e8ede0 100%);
+}
+
+/* এই main sections একই maximum width share করবে। */
+.topbar,
+.hero-layout,
+.bottom-strip,
+footer {
+    /* বড় screen-এ content অতিরিক্ত চওড়া হবে না। */
+    max-width: 1160px;
+    /* auto margin content-কে horizontally center করে। */
+    margin: 0 auto;
+}
+
+/* Header-এর brand এবং status-কে দুই পাশে বসানো হচ্ছে। */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* header-এর stable minimum height। */
+    min-height: 48px;
+}
+
+/* Brand icon এবং text পাশাপাশি রাখে। */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #27312d;
+    text-decoration: none;
+}
+
+/* Brand-এর house icon-এর colored square। */
+.brand-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    color: #fff9eb;
+    background: #db7544;
+    border-radius: 11px;
+    box-shadow: 0 6px 15px rgba(191, 92, 47, .2);
+}
+
+/* Brand-এর title এবং subtitle আলাদা line-এ বসে। */
+.brand strong,
+.brand small {
+    display: block;
+}
+
+/* Brand title-এর font এবং ছোট letter spacing। */
+.brand strong {
+    font: 700 15px 'Space Grotesk';
+    letter-spacing: -.2px;
+}
+
+/* Brand subtitle-এর muted color এবং size। */
+.brand small {
+    margin-top: 2px;
+    color: #7b847e;
+    font-size: 10px;
+}
+
+/* Header-এর online status text এবং dot পাশাপাশি। */
+.nav-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #68736b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* সবুজ গোল dot model online বোঝায়। */
+.live-dot {
+    width: 7px;
+    height: 7px;
+    background: #5e9b66;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(94, 155, 102, .13);
+}
+
+/* Hero copy এবং form-কে দুই-column grid-এ রাখে। */
+.hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 440px;
+    gap: clamp(45px, 9vw, 138px);
+    align-items: center;
+    padding: 9vh 0 7vh;
+}
+
+/* ছোট uppercase introductory label। */
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #b36338;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+}
+
+/* বড় headline-এর width, color, font এবং spacing। */
+.hero-copy h1 {
+    max-width: 610px;
+    margin: 20px 0 21px;
+    color: #293b32;
+    font: 600 clamp(43px, 5.7vw, 78px)/.97 'Space Grotesk';
+    letter-spacing: -3.2px;
+}
+
+/* headline-এর emphasized অংশ orange করা হচ্ছে। */
+.hero-copy h1 em {
+    color: #c9683c;
+    font-style: normal;
+}
+
+/* Hero-এর supporting paragraph-এর width ও readability। */
+.hero-text {
+    max-width: 500px;
+    margin: 0;
+    color: #6a766c;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+/* নিচের proof items পাশাপাশি রাখে। */
+.proof-row {
+    display: flex;
+    gap: 34px;
+    margin-top: 44px;
+}
+
+/* প্রতিটি proof icon ও text align করে। */
+.proof-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c0673e;
+}
+
+/* proof-এর text span block করা হচ্ছে। */
+.proof-item span {
+    display: block;
+}
+
+/* proof title এবং subtitle আলাদা line-এ রাখে। */
+.proof-item strong,
+.proof-item small {
+    display: block;
+}
+
+/* proof title-এর darker text। */
+.proof-item strong {
+    color: #40534a;
+    font-size: 12px;
+}
+
+/* proof subtitle-এর muted ছোট text। */
+.proof-item small {
+    margin-top: 3px;
+    color: #89948a;
+    font-size: 11px;
+}
+
+/* Prediction form-এর main white panel। */
+.finder-panel {
+    padding: 28px 30px 26px;
+    background: rgba(255, 253, 247, .88);
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 5px;
+    box-shadow: 0 24px 60px rgba(56, 66, 49, .13);
+}
+
+/* Panel-এর top label এবং counter দুই পাশে রাখে। */
+.panel-topline,
+.result-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Panel label-এর common uppercase style। */
+.panel-label,
+.result-heading {
+    color: #9a765e;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+}
+
+/* Panel-এর page/count number। */
+.panel-count {
+    color: #9da59b;
+    font: 700 11px 'Space Grotesk';
+}
+
+/* Slash-কে হালকা color দেওয়া হচ্ছে। */
+.panel-count i {
+    color: #d5d8ce;
+    font-style: normal;
+}
+
+/* Form heading-এর নিচে spacing। */
+.panel-heading {
+    margin: 16px 0 23px;
+}
+
+/* Form-এর main heading। */
+.panel-heading h2 {
+    margin: 0;
+    color: #293b32;
+    font: 600 25px 'Space Grotesk';
+    letter-spacing: -.8px;
+}
+
+/* Form heading-এর helper text। */
+.panel-heading p {
+    margin: 5px 0 0;
+    color: #8b958c;
+    font-size: 12px;
+}
+
+/* প্রতিটি input/select-এর নামের label। */
+label {
+    display: block;
+    margin: 16px 0 7px;
+    color: #68776c;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Dropdown-এর size, color, border এবং interaction। */
+select {
+    width: 100%;
+    padding: 11px 12px;
+    color: #34483d;
+    background: #f5f6ed;
+    border: 1px solid #e2e7dc;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Dropdown focus করলে user যেন active field বুঝতে পারে। */
+select:focus {
+    border-color: #d47a50;
+    box-shadow: 0 0 0 3px rgba(212, 122, 80, .12);
+}
+
+/* Room এবং seat type-কে দুইটি equal column-এ রাখে। */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* Wi-Fi এবং bachelor preference-এর প্রতিটি row। */
+.preference-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 0 1px;
+    border-bottom: 1px solid #edf0e8;
+}
+
+/* Preference icon এবং label align করে। */
+.preference-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #68776c;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Preference icon-এর accent color। */
+.preference-label svg {
+    color: #c96e45;
+}
+
+/* Yes/No buttons-এর বাইরের toggle container। */
+.segmented {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    background: #eef0e7;
+    border-radius: 4px;
+}
+
+/* Toggle-এর প্রতিটি button-এর base style। */
+.segmented button {
+    min-width: 38px;
+    padding: 5px 7px;
+    color: #8c968d;
+    background: transparent;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* Selected Yes/No button-এর active state। */
+.segmented button.selected {
+    color: #fff9ef;
+    background: #3f6652;
+}
+
+/* Prediction submit button-এর main style। */
+.predict-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px 16px;
+    color: #fffaf0;
+    background: #d16e42;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    transition: transform .2s, background .2s;
+}
+
+/* Mouse নিলে button-এর hover state। */
+.predict-button:hover {
+    background: #bb5d35;
+    transform: translateY(-2px);
+}
+
+/* Request চলার সময় button disable state। */
+.predict-button:disabled {
+    cursor: wait;
+    opacity: .65;
+    transform: none;
+}
+
+/* API বা validation error-এর red message। */
+.error-message {
+    margin: 11px 0 0;
+    color: #ae4936;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* Prediction না আসা পর্যন্ত result placeholder panel। */
+.result-panel {
+    margin-top: 16px;
+    padding: 15px;
+    background: #f0f2e9;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+/* Result পাওয়ার পরে green panel এবং reveal animation। */
+.result-panel.has-result {
+    background: #e8f0df;
+    border-color: #d5e2c7;
+    animation: reveal .35s ease-out;
+}
+
+/* Result label-এর ছোট uppercase style। */
+.result-heading {
+    color: #7f8d80;
+    font-size: 8px;
+}
+
+/* Result-এর area name accent color-এ দেখায়। */
+.result-area {
+    color: #c36d47;
+}
+
+/* Predicted rent-এর সবচেয়ে বড় text। */
+.result-panel strong {
+    display: block;
+    margin: 7px 0 3px;
+    color: #304b3c;
+    font: 600 31px 'Space Grotesk';
+    letter-spacing: -1px;
+}
+
+/* Result-এর নিচের ছোট helper message। */
+.result-note {
+    color: #8c988b;
+    font-size: 10px;
+}
+
+/* নিচের তিন-step explanation strip। */
+.bottom-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) auto;
+    gap: 23px;
+    padding: 19px 0;
+    border-top: 1px solid rgba(100, 119, 99, .18);
+    border-bottom: 1px solid rgba(100, 119, 99, .18);
+}
+
+/* প্রতিটি step-এর number এবং text পাশাপাশি। */
+.bottom-strip>div {
+    display: flex;
+    gap: 10px;
+}
+
+/* Step number-এর accent style। */
+.strip-number {
+    color: #c8764f;
+    font: 700 11px 'Space Grotesk';
+}
+
+/* Step title এবং description block line-এ থাকে। */
+.bottom-strip strong,
+.bottom-strip small {
+    display: block;
+}
+
+/* Step title-এর color ও size। */
+.bottom-strip strong {
+    color: #506156;
+    font-size: 11px;
+}
+
+/* Step description-এর width এবং muted style। */
+.bottom-strip small {
+    max-width: 190px;
+    margin-top: 4px;
+    color: #919b91;
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+/* Help icon-কে strip-এর center-এ align করে। */
+.help-icon {
+    align-self: center;
+    color: #a6afa4;
+}
+
+/* Footer-এর দুই পাশের ছোট metadata text। */
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 17px;
+    color: #9aa39a;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+}
+
+/* Result panel আসার সময় নিচ থেকে fade-in animation। */
+@keyframes reveal {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 800px-এর নিচে tablet/mobile layout শুরু হয়। */
+@media (max-width: 800px) {
+    /* Mobile-এ page padding কমানো হয়। */
+    .app-shell {
+        padding: 20px;
+    }
+
+    /* Hero দুই column থেকে single column হয়। */
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        padding: 10vh 0 8vh;
+    }
+
+    /* Mobile width অনুযায়ী headline responsive হয়। */
+    .hero-copy h1 {
+        max-width: 620px;
+        font-size: clamp(45px, 12vw, 68px);
+    }
+
+    /* Mobile-এ supporting text সামান্য ছোট হয়। */
+    .hero-text {
+        font-size: 15px;
+    }
+
+    /* Bottom steps mobile-এ একটার নিচে আরেকটা আসে। */
+    .bottom-strip {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    /* Mobile-এ decorative help icon hide করা হয়। */
+    .help-icon {
+        display: none;
+    }
+}
+
+/* ছোট phone screen-এর জন্য আরও compact adjustments। */
+@media (max-width: 460px) {
+    /* ছোট screen-এ status text ছোট করা হয়। */
+    .nav-meta {
+        font-size: 10px;
+    }
+
+    /* Proof items-এর gap কমানো হয়। */
+    .proof-row {
+        gap: 18px;
+        margin-top: 30px;
+    }
+
+    /* Phone-এ form panel-এর padding কমানো হয়। */
+    .finder-panel {
+        padding: 23px 20px;
+    }
+
+    /* দুই input column-এর gap ছোট করা হয়। */
+    .form-row {
+        gap: 9px;
+    }
+
+    /* Phone-এ footer text vertical layout নেয়। */
+    footer {
+        gap: 12px;
+        flex-direction: column;
+    }
+}
