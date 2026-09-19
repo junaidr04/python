@@ -18,8 +18,8 @@ function App() {
 
         const roomCount = Number(rooms);
         const area = Number(size);
-        if (!roomCount || roomCount < 1 || roomCount > 3 || !area || area < 100 || area > 1300) {
-            setError('Enter 1-3 rooms and an area between 100 and 1,300 sq ft.');
+        if (!roomCount || roomCount < 1 || roomCount > 4 || !area || area < 100 || area > 1300) {
+            setError('Enter 1-4 rooms and an area between 100 and 1,300 sq ft.');
             return;
         }
 
@@ -66,7 +66,7 @@ function App() {
                     </div>
 
                     <label htmlFor="rooms">Number of rooms</label>
-                    <div className="input-wrap"><input id="rooms" type="number" min="1" max="3" value={rooms} onChange={e => setRooms(e.target.value)} /><span>1-3 rooms</span></div>
+                    <div className="input-wrap"><input id="rooms" type="number" min="1" max="4" value={rooms} onChange={e => setRooms(e.target.value)} /><span>1-4 rooms</span></div>
 
                     <label htmlFor="size">Floor area</label>
                     <div className="input-wrap"><input id="size" type="number" min="100" max="1300" value={size} onChange={e => setSize(e.target.value)} /><span>100-1,300 sq ft</span></div>

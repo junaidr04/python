@@ -196,7 +196,7 @@ The model expects a CSV file with these columns:
 
 The prediction form accepts values within the training data range only:
 
-- Rooms: `1` to `3`
+- Rooms: `1` to `4`
 - Floor area: `100` to `1,300` sq ft
 - Location: `GEC`, `Agrabad`, `Oxygen`, `Bayezid`, or `2No Gate`
 

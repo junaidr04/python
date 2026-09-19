@@ -10,7 +10,7 @@ from fastapi import HTTPException
 data_path = Path(__file__).with_name("house_rent_project1.csv")
 dataset = pd.read_csv(data_path)
 valid_locations = set(dataset["location"].unique())
-max_rooms = int(dataset["rooms"].max())
+max_rooms = max(4, int(dataset["rooms"].max()))
 max_size_sqft = int(dataset["size_sqft"].max())
 
 # Load the pre-trained model at startup. Training is handled once by train.py.
