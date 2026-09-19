@@ -88,13 +88,13 @@ Run `python train.py` again whenever the CSV dataset changes. This replaces the 
 Start the API:
 
 ```powershell
-python -m uvicorn app:app --reload --port 8001
+python -m uvicorn app:app --reload --port 8002
 ```
 
 The backend will be available at:
 
-- API: http://127.0.0.1:8001
-- Interactive API docs: http://127.0.0.1:8001/docs
+- API: http://127.0.0.1:8002
+- Interactive API docs: http://127.0.0.1:8002/docs
 
 ## Frontend Setup
 
@@ -170,7 +170,8 @@ Request body:
 ```json
 {
   "rooms": 2,
-  "size_sqft": 700
+  "size_sqft": 700,
+  "location": "GEC"
 }
 ```
 
@@ -178,7 +179,7 @@ Example response:
 
 ```json
 {
-  "predicted_rent": 13958
+  "predicted_rent": 21085
 }
 ```
 
@@ -192,6 +193,7 @@ The model expects a CSV file with these columns:
 | --- | --- |
 | `rooms` | Number of rooms |
 | `size_sqft` | Property size in square feet |
+| `location` | Neighborhood or area |
 | `rent` | Monthly rent in taka |
 
 The prediction form accepts values within the training data range only:
@@ -206,11 +208,12 @@ The dataset is used by `train.py`. The running API uses the generated `rent_mode
 
 ## How the Prediction Works
 
-1. The backend loads the rental dataset with pandas.
-2. `rooms` and `size_sqft` are used as model features.
-3. `rent` is used as the target value.
-4. A `LinearRegression` model is trained when the API starts.
-5. The `/predict` endpoint returns the estimated rent for the submitted property details.
+1. `train.py` loads the rental dataset with pandas.
+2. `rooms`, `size_sqft`, and `location` are used as model features.
+3. `OneHotEncoder` converts location names into machine-readable values.
+4. A `RandomForestRegressor` is trained once and saved as `rent_model.pkl`.
+5. `app.py` loads the saved pipeline at startup without retraining.
+6. The `/predict` endpoint returns a location-aware rent estimate.
 
 ## Troubleshooting
 
@@ -219,7 +222,7 @@ The dataset is used by `train.py`. The running API uses the generated `rent_mode
 Use Python's module runner instead of the executable directly:
 
 ```powershell
-python -m uvicorn app:app --reload --port 8001
+python -m uvicorn app:app --reload --port 8002
 ```
 
 ### `ModuleNotFoundError: No module named 'rent_predictor'`
@@ -227,7 +230,7 @@ python -m uvicorn app:app --reload --port 8001
 If your terminal is already inside `rent_predictor/backend`, use:
 
 ```powershell
-python -m uvicorn app:app --reload --port 8001
+python -m uvicorn app:app --reload --port 8002
 ```
 
 Use `rent_predictor.backend.app:app` only when running from the repository root.
@@ -256,8 +259,7 @@ This project uses a small educational dataset and three features. Predictions sh
 
 - Add a larger, more representative dataset
 - Add automated model evaluation metrics
-- Persist a trained model instead of training on every startup
-- Add location and property condition features
+- Add property condition features
 - Add automated backend and frontend tests
 - Add deployment configuration
 
