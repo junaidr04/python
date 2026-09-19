@@ -1,0 +1,23 @@
+area,rooms,seat_type,rent_per_seat,bachelor_allowed,wifi,meal
+GEC,3,Single,8000,Yes,Yes,Yes
+GEC,3,Shared,5000,Yes,Yes,Yes
+Agrabad,2,Single,6500,Yes,No,Yes
+2No Gate,4,Shared,3500,Yes,Yes,No
+Oxygen,3,Shared,3000,Yes,No,Yes
+Bayezid,2,Single,5500,No,Yes,Yes
+GEC,2,Single,9000,Yes,Yes,Yes
+Agrabad,3,Shared,4500,Yes,Yes,No
+Oxygen,2,Single,4200,Yes,Yes,Yes
+Bayezid,3,Shared,3600,Yes,No,No
+2No Gate,3,Single,5200,Yes,Yes,No
+GEC,4,Shared,4800,Yes,Yes,Yes
+Agrabad,2,Shared,3800,No,No,Yes
+Oxygen,4,Shared,3200,Yes,Yes,No
+Bayezid,2,Shared,3000,Yes,No,Yes
+GEC,1,Single,11000,Yes,Yes,Yes
+Agrabad,4,Shared,4100,Yes,Yes,Yes
+Oxygen,3,Single,6000,Yes,No,Yes
+Bayezid,1,Single,4800,No,Yes,No
+2No Gate,2,Shared,2800,Yes,No,No
+GEC,2,Shared,6200,Yes,Yes,Yes
+Agrabad,3,Single,7200,Yes,No,Yes
