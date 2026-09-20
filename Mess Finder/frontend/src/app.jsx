@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, BadgeCheck, BedDouble, CircleHelp, Compass, ExternalLink, House, MapPin, MessageCircle, Wifi } from 'lucide-react';
+import { ArrowRight, BadgeCheck, BedDouble, CircleHelp, Compass, ExternalLink, House, LoaderCircle, MapPin, MessageCircle, Wifi } from 'lucide-react';
 import './app.css';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8002';
@@ -58,10 +58,11 @@ function App() {
                         <div className="proof-item"><BadgeCheck size={18} /><span><strong>Local data</strong><small>GEC to Bayezid</small></span></div>
                         <div className="proof-item"><BedDouble size={18} /><span><strong>Seat-first</strong><small>Built for bachelors</small></span></div>
                     </div>
+                    <div className="hero-stats"><div><strong>5</strong><span>areas covered</span></div><div><strong>22</strong><span>sample listings</span></div><div><strong>৳</strong><span>per seat</span></div></div>
                 </div>
 
                 <form className="finder-panel" onSubmit={predictRent}>
-                    <div className="panel-topline"><span className="panel-label">YOUR SHORTLIST</span><span className="panel-count">01 <i>/</i> 01</span></div>
+                    <div className="panel-topline"><span className="panel-label">QUICK ESTIMATE</span><span className="panel-count">LIVE MODEL</span></div>
                     <div className="panel-heading"><h2>Find your seat range</h2><p>A few details, then we do the math.</p></div>
 
                     <label htmlFor="area">Preferred area</label>
@@ -80,14 +81,14 @@ function App() {
                     </div>
                     <div className="preference-row bachelor-row"><div className="preference-label"><BadgeCheck size={16} /><span>Bachelor only</span></div><button type="button" className={`switch ${form.bachelor_allowed === 'Yes' ? 'on' : ''}`} onClick={() => updateField('bachelor_allowed', form.bachelor_allowed === 'Yes' ? 'No' : 'Yes')} aria-pressed={form.bachelor_allowed === 'Yes'}><span /></button></div>
 
-                    <button className="predict-button" type="submit" disabled={loading}>{loading ? 'Working it out...' : 'Estimate my seat rent'}<ArrowRight size={18} /></button>
+                    <button className="predict-button" type="submit" disabled={loading}>{loading ? <><LoaderCircle className="button-loader" size={17} /> Calculating range...</> : <>Estimate my seat rent<ArrowRight size={18} /></>}</button>
                     {error && <p className="error-message" role="alert">{error}</p>}
                     <div className={`result-panel ${result ? 'has-result' : ''}`} aria-live="polite">
                         <div className="result-heading"><span>ESTIMATED MONTHLY RENT / SEAT</span>{result && <span className="result-area">{result.area}</span>}</div>
-                        <strong>{result ? `৳${Math.round(result.predicted_rent_per_seat).toLocaleString()}` : '৳ — — —'}</strong>
+                        <strong>{result ? `৳${result.rent_range_min.toLocaleString()} – ৳${result.rent_range_max.toLocaleString()}` : '৳ — — —'}</strong>
                         <span className="result-note">{result ? 'A useful starting point for your search.' : 'Your estimate will appear here.'}</span>
                         {result && <div className="result-actions"><a href={result.location_link} target="_blank" rel="noreferrer"><MapPin size={15} /> View on Map <ExternalLink size={13} /></a><a className="facebook-action" href={`https://www.facebook.com/search/top/?q=${encodeURIComponent(`${result.area} mess rent Chittagong`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Contact FB</a></div>}
-                        {result && <p className="result-disclaimer">{result.contact} · Confirm rent and availability with the owner.</p>}
+                        {result && <p className="result-disclaimer">Based on limited sample data across 5 areas. {result.contact} · Confirm rent and availability with the owner.</p>}
                     </div>
                 </form>
             </section>

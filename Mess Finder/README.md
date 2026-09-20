@@ -150,6 +150,8 @@ Example response:
 ```json
 {
 	"predicted_rent_per_seat": 5458.0,
+	"rent_range_min": 4800,
+	"rent_range_max": 6200,
 	"area": "GEC",
 	"seat_type": "Shared",
 	"location_link": "https://www.google.com/maps/search/mess+rent+in+GEC+Chittagong",
@@ -157,7 +159,7 @@ Example response:
 }
 ```
 
-The API validates that the area and seat type exist in the training dataset. Room count must be between 1 and 4, and the preference fields must be `Yes` or `No`.
+The API validates that the area and seat type exist in the training dataset. `rent_range_min` and `rent_range_max` show the observed rent range for the selected area and seat type, so the frontend can communicate uncertainty instead of presenting a false precision point estimate. Room count must be between 1 and 4, and the preference fields must be `Yes` or `No`.
 
 ## Testing and Validation
 
