@@ -50,7 +50,7 @@ app.add_middleware(
     # Environment থেকে নির্দিষ্ট origin allow করা হচ্ছে।
     allow_origins=configured_origins,
     # Localhost এবং 127.0.0.1-এর যেকোনো development port allow করা হচ্ছে।
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_origin_regex=r"https?://((localhost|127\.0\.0\.1)(:\d+)?|[a-z0-9-]+\.vercel\.app)$",
     # Cookie/authorization ব্যবহার করলে credentials দরকার হয়।
     allow_credentials=True,
     # সব HTTP method, যেমন GET এবং POST, allow করা হচ্ছে।

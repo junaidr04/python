@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { ArrowRight, BadgeCheck, BedDouble, ExternalLink, House, LoaderCircle, MapPin, MessageCircle, Wifi } from 'lucide-react';
 import './app.css';
 
-const apiBaseUrl = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8002').replace(/\/+$/, '');
+const defaultApiUrl = import.meta.env.PROD ? 'https://mess-finder-api.onrender.com' : 'http://127.0.0.1:8002';
+const apiBaseUrl = (import.meta.env.VITE_API_URL || defaultApiUrl).replace(/\/+$/, '');
 const areas = ['GEC', 'Agrabad', '2No Gate', 'Oxygen', 'Bayezid'];
 
 function App() {
