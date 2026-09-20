@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight, BadgeCheck, BedDouble, ExternalLink, House, LoaderCircle, MapPin, MessageCircle, Wifi } from 'lucide-react';
 import './app.css';
 
@@ -18,6 +18,12 @@ function App() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        const warmupController = new AbortController();
+        fetch(`${apiBaseUrl}/`, { signal: warmupController.signal }).catch(() => { });
+        return () => warmupController.abort();
+    }, []);
+
     const updateField = (field, value) => setForm(current => ({ ...current, [field]: value }));
     const resultPosition = result
         ? Math.min(100, Math.max(0, ((result.predicted_rent_per_seat - result.rent_range_min) / Math.max(1, result.rent_range_max - result.rent_range_min)) * 100))
@@ -29,17 +35,23 @@ function App() {
         setResult(null);
         setError('');
         setLoading(true);
+        const requestController = new AbortController();
+        const timeoutId = window.setTimeout(() => requestController.abort(), 45000);
         try {
             const response = await fetch(`${apiBaseUrl}/predict-mess`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                signal: requestController.signal,
                 body: JSON.stringify({ ...form, rooms: Number(form.rooms) }),
             });
             if (!response.ok) throw new Error('Prediction request failed');
             setResult(await response.json());
-        } catch {
-            setError('Prediction service is offline. Start the backend on port 8002 and try again.');
+        } catch (requestError) {
+            setError(requestError.name === 'AbortError'
+                ? 'The hosted backend is waking up. Please try again in a few seconds.'
+                : 'Prediction service is offline. Check the deployed backend and try again.');
         } finally {
+            window.clearTimeout(timeoutId);
             setLoading(false);
         }
     };
