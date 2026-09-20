@@ -349,6 +349,36 @@ select:focus {
     background: #3f6652;
 }
 
+/* Bachelor-only preference uses a compact on/off control. */
+.switch {
+    width: 42px;
+    height: 24px;
+    padding: 3px;
+    background: #d9ded3;
+    border: 0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.switch span {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: #fffaf0;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(48, 75, 60, .18);
+    transition: transform .2s;
+}
+
+.switch.on {
+    background: #3f6652;
+}
+
+.switch.on span {
+    transform: translateX(18px);
+}
+
 /* Prediction submit button-এর main style। */
 .predict-button {
     display: flex;
@@ -428,6 +458,53 @@ select:focus {
 .result-note {
     color: #8c988b;
     font-size: 10px;
+}
+
+/* Quick actions make the estimate useful beyond the calculator. */
+.result-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.result-actions a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 10px 8px;
+    color: #fffaf0;
+    background: #304b3c;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: transform .2s, background .2s;
+}
+
+.result-actions a:hover {
+    background: #23382d;
+    transform: translateY(-1px);
+}
+
+.result-actions a.facebook-action {
+    color: #fff;
+    background: #4776b8;
+}
+
+.result-actions a.facebook-action:hover {
+    background: #35629d;
+}
+
+.result-disclaimer {
+    margin: 11px 0 0;
+    color: #8c988b;
+    font-size: 9px;
+    line-height: 1.4;
+    text-align: center;
 }
 
 /* নিচের তিন-step explanation strip। */
@@ -560,6 +637,10 @@ footer {
     /* দুই input column-এর gap ছোট করা হয়। */
     .form-row {
         gap: 9px;
+    }
+
+    .result-actions {
+        grid-template-columns: 1fr;
     }
 
     /* Phone-এ footer text vertical layout নেয়। */

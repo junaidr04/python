@@ -113,8 +113,12 @@ def predict_mess(data: MessInput):
     # একই column order রেখে trained model-এ input পাঠানো হচ্ছে।
     # predict()[0] কারণ model এক row-এর জন্য list/array-এর ভিতরে একটি result দেয়।
     prediction = mess_model.predict(input_df)[0]
+    area_listing = dataset.loc[dataset["area"] == data.area].iloc[0]
     # float conversion এবং round করে clean JSON response তৈরি করা হচ্ছে।
     return {
         "predicted_rent_per_seat": round(float(prediction), 2),
         "area": data.area,
+        "seat_type": data.seat_type,
+        "location_link": area_listing["location_link"],
+        "contact": area_listing["contact"],
     }

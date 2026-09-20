@@ -13,6 +13,9 @@ The project is designed as a practical example of connecting a trained regressio
 - Encodes categorical values with `OneHotEncoder`
 - Exposes a FastAPI REST endpoint
 - Provides a responsive React and Vite frontend
+- Adds a Bachelor Only toggle for bachelor-focused searches
+- Provides Google Maps and Facebook search actions after prediction
+- Includes area-based `location_link` and `contact` metadata in prediction responses
 - Includes input validation and clear API errors
 - Saves the trained model so the API does not retrain on every request
 - Includes beginner-friendly Bengali comments in the backend source code
@@ -63,8 +66,12 @@ The current training dataset contains sample records for GEC, Agrabad, 2No Gate,
 | `bachelor_allowed` | Whether bachelor residents are accepted | `Yes` |
 | `wifi` | Whether Wi-Fi is available | `Yes` |
 | `meal` | Whether meals are available in the mess | `Yes` |
+| `location_link` | Google Maps search link for the area | `https://www.google.com/maps/search/mess+rent+in+GEC+Chittagong` |
+| `contact` | Contact label shown with the result | `FB: Mess Owner` |
 
-The `meal` column is stored in the dataset for future expansion. The current model intentionally uses only the other five input features, matching the API and frontend form.
+The `meal`, `location_link`, and `contact` columns are stored for listing and future expansion. The current model intentionally uses only the five input features `area`, `rooms`, `seat_type`, `bachelor_allowed`, and `wifi`, matching the API and frontend form.
+
+The current map links are area-based Google Maps search links. They are useful starting points, but users should confirm the exact address, rent, availability, and bachelor policy with the owner before moving in.
 
 ## Requirements
 
@@ -143,7 +150,10 @@ Example response:
 ```json
 {
 	"predicted_rent_per_seat": 5458.0,
-	"area": "GEC"
+	"area": "GEC",
+	"seat_type": "Shared",
+	"location_link": "https://www.google.com/maps/search/mess+rent+in+GEC+Chittagong",
+	"contact": "FB: Mess Owner"
 }
 ```
 

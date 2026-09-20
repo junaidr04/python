@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, BadgeCheck, BedDouble, CircleHelp, Compass, House, Wifi } from 'lucide-react';
+import { ArrowRight, BadgeCheck, BedDouble, CircleHelp, Compass, ExternalLink, House, MapPin, MessageCircle, Wifi } from 'lucide-react';
 import './app.css';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8002';
@@ -78,7 +78,7 @@ function App() {
                         <div className="preference-label"><Wifi size={16} /><span>Wi-Fi included?</span></div>
                         <div className="segmented" role="group" aria-label="Wi-Fi included"><button type="button" className={form.wifi === 'Yes' ? 'selected' : ''} onClick={() => updateField('wifi', 'Yes')}>Yes</button><button type="button" className={form.wifi === 'No' ? 'selected' : ''} onClick={() => updateField('wifi', 'No')}>No</button></div>
                     </div>
-                    <div className="preference-row"><div className="preference-label"><BadgeCheck size={16} /><span>Bachelor allowed?</span></div><div className="segmented" role="group" aria-label="Bachelor allowed"><button type="button" className={form.bachelor_allowed === 'Yes' ? 'selected' : ''} onClick={() => updateField('bachelor_allowed', 'Yes')}>Yes</button><button type="button" className={form.bachelor_allowed === 'No' ? 'selected' : ''} onClick={() => updateField('bachelor_allowed', 'No')}>No</button></div></div>
+                    <div className="preference-row bachelor-row"><div className="preference-label"><BadgeCheck size={16} /><span>Bachelor only</span></div><button type="button" className={`switch ${form.bachelor_allowed === 'Yes' ? 'on' : ''}`} onClick={() => updateField('bachelor_allowed', form.bachelor_allowed === 'Yes' ? 'No' : 'Yes')} aria-pressed={form.bachelor_allowed === 'Yes'}><span /></button></div>
 
                     <button className="predict-button" type="submit" disabled={loading}>{loading ? 'Working it out...' : 'Estimate my seat rent'}<ArrowRight size={18} /></button>
                     {error && <p className="error-message" role="alert">{error}</p>}
@@ -86,6 +86,8 @@ function App() {
                         <div className="result-heading"><span>ESTIMATED MONTHLY RENT / SEAT</span>{result && <span className="result-area">{result.area}</span>}</div>
                         <strong>{result ? `৳${Math.round(result.predicted_rent_per_seat).toLocaleString()}` : '৳ — — —'}</strong>
                         <span className="result-note">{result ? 'A useful starting point for your search.' : 'Your estimate will appear here.'}</span>
+                        {result && <div className="result-actions"><a href={result.location_link} target="_blank" rel="noreferrer"><MapPin size={15} /> View on Map <ExternalLink size={13} /></a><a className="facebook-action" href={`https://www.facebook.com/search/top/?q=${encodeURIComponent(`${result.area} mess rent Chittagong`)}`} target="_blank" rel="noreferrer"><MessageCircle size={15} /> Contact FB</a></div>}
+                        {result && <p className="result-disclaimer">{result.contact} · Confirm rent and availability with the owner.</p>}
                     </div>
                 </form>
             </section>
