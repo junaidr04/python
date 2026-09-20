@@ -115,8 +115,15 @@ def predict_mess(data: MessInput):
     prediction = mess_model.predict(input_df)[0]
     area_listing = dataset.loc[dataset["area"] == data.area].iloc[0]
     comparable_rows = dataset.loc[
-        (dataset["area"] == data.area) & (dataset["seat_type"] == data.seat_type)
+        (dataset["area"] == data.area)
+        & (dataset["rooms"] == data.rooms)
+        & (dataset["seat_type"] == data.seat_type)
     ]
+    # Exact room combinations are preferred; sparse data falls back to the same area and seat type.
+    if comparable_rows.empty:
+        comparable_rows = dataset.loc[
+            (dataset["area"] == data.area) & (dataset["seat_type"] == data.seat_type)
+        ]
     rent_range_min = int(comparable_rows["rent_per_seat"].min())
     rent_range_max = int(comparable_rows["rent_per_seat"].max())
     # float conversion এবং round করে clean JSON response তৈরি করা হচ্ছে।

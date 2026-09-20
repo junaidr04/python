@@ -159,7 +159,7 @@ Example response:
 }
 ```
 
-The API validates that the area and seat type exist in the training dataset. `rent_range_min` and `rent_range_max` show the observed rent range for the selected area and seat type, so the frontend can communicate uncertainty instead of presenting a false precision point estimate. Room count must be between 1 and 4, and the preference fields must be `Yes` or `No`.
+The API validates that the area and seat type exist in the training dataset. `rent_range_min` and `rent_range_max` show the actual observed minimum and maximum rents for the selected area, room count, and seat type. If an exact room combination is not present, the API falls back to the same area and seat type. Because some combinations have only one or two sample rows, this range can be wide or collapse to one value; it communicates the dataset's uncertainty instead of presenting a false precision point estimate. Room count must be between 1 and 4, and the preference fields must be `Yes` or `No`.
 
 ## Testing and Validation
 
